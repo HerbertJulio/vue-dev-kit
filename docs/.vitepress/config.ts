@@ -3,9 +3,10 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Vue Dev Kit',
   description: 'Development toolkit for Vue 3 projects with Claude Code',
+  base: '/vue-dev-kit/',
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vue-dev-kit/logo.svg' }],
   ],
 
   themeConfig: {
