@@ -1,9 +1,10 @@
-# CLAUDE.md – Vue Dev Kit
+# CLAUDE.md — Vue Dev Kit
 
-## Sobre
-Kit de desenvolvimento para projetos Vue 3 com TypeScript. Inclui agentes, slash commands, e padrões arquiteturais para o time.
+## About
 
-**📖 Padrões e convenções: ver `docs/ARCHITECTURE.md`**
+Development toolkit for Vue 3 projects with TypeScript. Includes AI agents, slash commands, and architectural patterns.
+
+**Source of truth for patterns: `docs/ARCHITECTURE.md`**
 
 ## AI Team Configuration
 
@@ -11,47 +12,52 @@ Kit de desenvolvimento para projetos Vue 3 com TypeScript. Inclui agentes, slash
 **Important: ALWAYS read docs/ARCHITECTURE.md before creating or modifying files.**
 
 ### Stack
+
 - Vue 3 + `<script setup lang="ts">`
 - Pinia (client state) + TanStack Vue Query (server state)
 - Vite + TypeScript (strict) + Zod
 - Vue Router 4
 - Vitest + @vue/test-utils
 
-### Agentes Disponíveis
+### Available Agents
 
-| Agente | Quando Usar |
-|--------|-------------|
-| `@feature-builder` | Criar um módulo/feature novo do zero |
-| `@vue-component-creator` | Criar componentes seguindo os padrões |
-| `@service-creator` | Criar service + adapter + types de um recurso |
-| `@composable-creator` | Criar composables com Vue Query |
-| `@code-reviewer` | Revisar código / PRs |
-| `@bug-hunter` | Investigar e corrigir bugs |
-| `@code-archaeologist` | Mapear código existente antes de mexer |
-| `@performance-profiler` | Analisar performance |
-| `@migration-orchestrator` | Migrar módulo legado para nova arquitetura |
-| `@vue-component-migrator` | Migrar componente de Options → script setup |
+| Agent | When to Use |
+|-------|-------------|
+| `@feature-builder` | Create a new module/feature from scratch |
+| `@vue-component-creator` | Create components following conventions |
+| `@service-creator` | Create service + adapter + types for a resource |
+| `@composable-creator` | Create composables with Vue Query |
+| `@code-reviewer` | Review code / PRs |
+| `@bug-hunter` | Investigate and fix bugs |
+| `@code-archaeologist` | Map existing code before changing it |
+| `@performance-profiler` | Analyze performance |
+| `@migration-orchestrator` | Migrate legacy module to new architecture |
+| `@vue-component-migrator` | Migrate component from Options → script setup |
 
-### Slash Commands Disponíveis
+### Available Slash Commands
 
-| Comando | O que faz |
-|---------|-----------|
-| `/create-module [nome]` | Scaffold completo de um módulo |
-| `/create-component [nome]` | Cria componente com template padrão |
-| `/create-service [nome]` | Cria service + adapter + types |
-| `/create-composable [nome]` | Cria composable com Vue Query |
-| `/review` | Roda review completo do código alterado |
-| `/check-architecture` | Valida conformidade com ARCHITECTURE.md |
-| `/migrate-component [arquivo]` | Migra componente Options→setup |
-| `/migrate-module [path]` | Migra módulo inteiro |
-| `/generate-types [endpoint]` | Gera types/contracts/adapter de um endpoint |
+| Command | What it does |
+|---------|-------------|
+| `/create-module [name]` | Full module scaffold |
+| `/create-component [name]` | Create component with standard template |
+| `/create-service [name]` | Create service + adapter + types |
+| `/create-composable [name]` | Create composable with Vue Query |
+| `/create-test [file]` | Create tests for a file |
+| `/review` | Full code review against ARCHITECTURE.md |
+| `/check-architecture` | Validate conformance with ARCHITECTURE.md |
+| `/fix-violations` | Find and fix architecture violations |
+| `/migrate-component [file]` | Migrate component Options → setup |
+| `/migrate-module [path]` | Migrate entire module |
+| `/generate-types [endpoint]` | Generate types/contracts/adapter from endpoint |
+| `/onboard [module]` | Quick module overview for onboarding |
 
-### Padrões-Chave (detalhes em docs/ARCHITECTURE.md)
-- **Services**: só HTTP, sem try/catch, sem transformação
-- **Adapters**: funções puras, API↔App, snake→camel
-- **Types**: `.types.ts` (API raw) + `.contracts.ts` (app)
-- **Composables**: orquestram service→adapter→Vue Query
-- **Stores Pinia**: apenas client state
-- **Componentes**: script setup, composition pattern, < 200 linhas
-- **Utils**: funções puras | **Helpers**: com side effects
-- **Modules**: não importam entre si
+### Key Patterns (details in docs/ARCHITECTURE.md)
+
+- **Services**: HTTP only, no try/catch, no transformation
+- **Adapters**: pure functions, API ↔ App, snake_case → camelCase
+- **Types**: `.types.ts` (API raw) + `.contracts.ts` (app contract)
+- **Composables**: orchestrate service → adapter → Vue Query
+- **Pinia Stores**: client state only
+- **Components**: script setup, composition pattern, < 200 lines
+- **Utils**: pure functions | **Helpers**: with side effects
+- **Modules**: don't import from each other

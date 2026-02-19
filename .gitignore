@@ -8,5 +8,13 @@ Thumbs.db
 *.swp
 *.swo
 
-# Node (caso alguém rode npm init aqui)
+# Node
 node_modules/
+
+# Local config
+.claude/settings.local.json
+.mcp.json
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/

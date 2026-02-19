@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# 🛠️ Vue Dev Kit – Instalação
+# Vue Dev Kit — Installation Script
 # ============================================================
 set -euo pipefail
 
@@ -10,36 +10,52 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo -e "\n${BLUE}🛠️  Vue Dev Kit – Instalação para o Time${NC}\n"
+LITE_MODE=false
+if [[ "${1:-}" == "--lite" ]]; then
+    LITE_MODE=true
+fi
 
-# Detectar se está em um projeto (tem package.json)
+if $LITE_MODE; then
+    echo -e "\n${BLUE}🪶 Vue Dev Kit — Lite Installation${NC}\n"
+else
+    echo -e "\n${BLUE}🛠️  Vue Dev Kit — Full Installation${NC}\n"
+fi
+
+# Detect if we're in a project (has package.json)
 if [ ! -f "package.json" ]; then
-    echo -e "${YELLOW}⚠️  Nenhum package.json encontrado.${NC}"
-    echo "Execute este script na raiz do seu projeto Vue."
+    echo -e "${YELLOW}⚠️  No package.json found.${NC}"
+    echo "Run this script from the root of your Vue project."
     exit 1
 fi
 
-echo -e "${BLUE}Instalando no projeto: $(pwd)${NC}\n"
+echo -e "${BLUE}Installing into: $(pwd)${NC}\n"
 
-# 1. Criar .claude/agents/ e copiar agentes
-echo -e "${BLUE}📦 Instalando agentes...${NC}"
+# 1. Install agents
+if $LITE_MODE; then
+    echo -e "${BLUE}📦 Installing Lite agents (~40-60% fewer tokens)...${NC}"
+    AGENTS_DIR="$SCRIPT_DIR/agents-lite"
+else
+    echo -e "${BLUE}📦 Installing Full agents...${NC}"
+    AGENTS_DIR="$SCRIPT_DIR/agents"
+fi
+
 mkdir -p .claude/agents
 
 count=0
 while IFS= read -r agent_file; do
-    relative="${agent_file#$SCRIPT_DIR/agents/}"
+    relative="${agent_file#$AGENTS_DIR/}"
     target=".claude/agents/$relative"
     mkdir -p "$(dirname "$target")"
     cp "$agent_file" "$target"
     name=$(grep -m1 "^name:" "$agent_file" | cut -d: -f2 | tr -d ' ')
     echo -e "  ${GREEN}✅ @$name${NC}"
     count=$((count + 1))
-done < <(find "$SCRIPT_DIR/agents" -name "*.md" -type f)
+done < <(find "$AGENTS_DIR" -name "*.md" -type f)
 
-echo -e "\n  ${GREEN}$count agentes instalados${NC}"
+echo -e "\n  ${GREEN}$count agents installed${NC}"
 
-# 2. Criar .claude/commands/ e copiar slash commands
-echo -e "\n${BLUE}⚡ Instalando slash commands...${NC}"
+# 2. Install slash commands
+echo -e "\n${BLUE}⚡ Installing slash commands...${NC}"
 mkdir -p .claude/commands
 
 cmd_count=0
@@ -53,17 +69,17 @@ while IFS= read -r cmd_file; do
     cmd_count=$((cmd_count + 1))
 done < <(find "$SCRIPT_DIR/commands" -name "*.md" -type f)
 
-echo -e "\n  ${GREEN}$cmd_count commands instalados${NC}"
+echo -e "\n  ${GREEN}$cmd_count commands installed${NC}"
 
-# 3. Copiar docs
-echo -e "\n${BLUE}📖 Instalando docs...${NC}"
+# 3. Copy docs
+echo -e "\n${BLUE}📖 Installing docs...${NC}"
 mkdir -p docs
 
 if [ ! -f "docs/ARCHITECTURE.md" ]; then
     cp "$SCRIPT_DIR/docs/ARCHITECTURE.md" docs/ARCHITECTURE.md
     echo -e "  ${GREEN}✅ docs/ARCHITECTURE.md${NC}"
 else
-    echo -e "  ${YELLOW}⚠️  docs/ARCHITECTURE.md já existe (não sobrescrito)${NC}"
+    echo -e "  ${YELLOW}⚠️  docs/ARCHITECTURE.md already exists (not overwritten)${NC}"
 fi
 
 # 4. CLAUDE.md
@@ -71,28 +87,33 @@ if [ ! -f "CLAUDE.md" ]; then
     cp "$SCRIPT_DIR/CLAUDE.md" ./CLAUDE.md
     echo -e "  ${GREEN}✅ CLAUDE.md${NC}"
 else
-    echo -e "  ${YELLOW}⚠️  CLAUDE.md já existe (não sobrescrito)${NC}"
+    echo -e "  ${YELLOW}⚠️  CLAUDE.md already exists (not overwritten)${NC}"
 fi
 
 # Done
 echo -e "\n${GREEN}════════════════════════════════════════${NC}"
-echo -e "${GREEN}  🎉 Vue Dev Kit instalado com sucesso!${NC}"
+echo -e "${GREEN}  🎉 Vue Dev Kit installed successfully!${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}\n"
 
-echo "Abra o Claude Code e teste:"
+if $LITE_MODE; then
+    echo -e "${YELLOW}Lite mode: agents use fewer tokens but skip validation steps.${NC}"
+    echo -e "${YELLOW}To switch to Full agents later, run: setup.sh (without --lite)${NC}\n"
+fi
+
+echo "Open Claude Code and try:"
 echo ""
-echo "  claude                              # abrir"
-echo "  /agents                             # ver agentes"
-echo "  /dev-create-module marketplace      # criar módulo"
-echo "  /review-check-architecture          # validar arquitetura"
-echo "  /review-review                      # review de código"
+echo "  claude                              # open"
+echo "  /agents                             # list agents"
+echo "  /dev-create-module marketplace      # scaffold a module"
+echo "  /review-check-architecture          # validate architecture"
+echo "  /review-review                      # code review"
 echo ""
-echo "Ou converse:"
+echo "Or just ask:"
 echo ""
-echo '  "Use @feature-builder para criar o módulo de domains"'
-echo '  "Use @code-archaeologist para mapear src/views/"'
-echo '  "Use @bug-hunter para investigar o erro no dashboard"'
+echo '  "Use @feature-builder to create the domains module with CRUD"'
+echo '  "Use @code-archaeologist to map src/modules/auth/"'
+echo '  "Use @bug-hunter to investigate the dashboard error"'
 echo ""
-echo -e "${BLUE}📖 Leia docs/ARCHITECTURE.md para entender os padrões.${NC}"
-echo -e "${BLUE}📖 Customize CLAUDE.md e ARCHITECTURE.md para seu projeto.${NC}"
+echo -e "${BLUE}📖 Read docs/ARCHITECTURE.md to understand the patterns.${NC}"
+echo -e "${BLUE}📖 Customize CLAUDE.md and ARCHITECTURE.md for your project.${NC}"
 echo ""
