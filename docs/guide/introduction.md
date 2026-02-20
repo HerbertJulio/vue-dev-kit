@@ -1,6 +1,10 @@
 # Introduction
 
-[![GitHub stars](https://img.shields.io/github/stars/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Stars)](https://github.com/HerbertJulio/vue-dev-kit/stargazers) [![GitHub forks](https://img.shields.io/github/forks/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Forks)](https://github.com/HerbertJulio/vue-dev-kit/network/members) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/HerbertJulio/vue-dev-kit/blob/main/LICENSE)
+<p>
+  <a href="https://github.com/HerbertJulio/vue-dev-kit/stargazers"><img src="https://img.shields.io/github/stars/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Stars" alt="GitHub stars" /></a>&nbsp;
+  <a href="https://github.com/HerbertJulio/vue-dev-kit/network/members"><img src="https://img.shields.io/github/forks/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Forks" alt="GitHub forks" /></a>&nbsp;
+  <a href="https://github.com/HerbertJulio/vue-dev-kit/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
+</p>
 
 ## What is Vue Dev Kit?
 
