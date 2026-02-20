@@ -3,8 +3,8 @@
 **Supercharge [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with specialized AI agents for Vue 3 development.** Scaffold modules, review architecture, migrate legacy code, and hunt bugs — all following your project's conventions automatically.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/HerbertJulio/vue-dev-kit?style=social)](https://github.com/HerbertJulio/vue-dev-kit/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/HerbertJulio/vue-dev-kit?style=social)](https://github.com/HerbertJulio/vue-dev-kit/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Stars)](https://github.com/HerbertJulio/vue-dev-kit/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Forks)](https://github.com/HerbertJulio/vue-dev-kit/network/members)
 
 ---
 
