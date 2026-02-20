@@ -2,27 +2,44 @@
 
 Agents are specialized AIs that Claude delegates to automatically or that you invoke with `@name`.
 
-Vue Dev Kit includes **4 consolidated agents**, each handling multiple scopes via automatic detection.
+Vue Dev Kit includes **4 consolidated agents** organized into two scenarios:
 
 ```mermaid
 graph TB
-    User["You ask Claude"] --> Detect{"Scope Detection"}
-    Detect -->|"create, scaffold, test"| Builder["🏗️ @vue-builder"]
-    Detect -->|"review, explore, performance"| Reviewer["✅ @vue-reviewer"]
-    Detect -->|"migrate, convert, modernize"| Migrator["🔄 @vue-migrator"]
-    Detect -->|"bug, error, broken"| Doctor["🔍 @vue-doctor"]
+    User["You ask Claude"] --> Detect{"What do you need?"}
+
+    subgraph daily["🏗️ Day-to-Day"]
+        Builder["@vue-builder<br/><i>create, scaffold, test</i>"]
+        Reviewer["@vue-reviewer<br/><i>review, explore, performance</i>"]
+        Doctor["@vue-doctor<br/><i>bug, error, broken</i>"]
+    end
+
+    subgraph migration["🔄 Migration"]
+        Migrator["@vue-migrator<br/><i>migrate, convert, modernize</i>"]
+        ReviewerM["@vue-reviewer<br/><i>diagnose, validate</i>"]
+    end
+
+    Detect --> daily
+    Detect --> migration
 
     style User fill:#42b883,color:#fff
     style Detect fill:#35495e,color:#fff
+    style daily fill:#f0faf5,stroke:#42b883
+    style migration fill:#f0f4fa,stroke:#35495e
     style Builder fill:#42b883,color:#fff
     style Reviewer fill:#42b883,color:#fff
-    style Migrator fill:#42b883,color:#fff
     style Doctor fill:#42b883,color:#fff
+    style Migrator fill:#35495e,color:#fff
+    style ReviewerM fill:#35495e,color:#fff
 ```
 
 ---
 
-## @vue-builder — Build New Code
+## 🏗️ Day-to-Day Agents
+
+These agents are for **everyday development** — building features, reviewing code, and fixing bugs.
+
+### @vue-builder — Build New Code
 
 **When to use:** Create any new code — modules, components, services, composables, or tests.
 
@@ -89,7 +106,7 @@ Priority: adapters (pure, easy) > composables (mock service) > components (@vue/
 
 ---
 
-## @vue-reviewer — Review & Analyze
+### @vue-reviewer — Review & Analyze
 
 **When to use:** Review code changes, explore modules, analyze performance.
 
@@ -143,7 +160,11 @@ The reviewer never modifies files. It suggests fixes with code snippets you can 
 
 ---
 
-## @vue-migrator — Modernize Legacy Code
+## 🔄 Migration Agents
+
+These agents are for **modernizing legacy projects** — converting Options API to setup, JS to TS, Vuex to Pinia + Vue Query. Use `@vue-reviewer` first to diagnose the current state, then `@vue-migrator` to execute the migration.
+
+### @vue-migrator — Modernize Legacy Code
 
 **When to use:** Migrate Options API → script setup, JS → TS, or full module modernization.
 
@@ -213,7 +234,7 @@ Decomposes if > 200 lines. Updates consumers if API changes.
 
 ---
 
-## @vue-doctor — Investigate Bugs
+### @vue-doctor — Investigate Bugs
 
 **When to use:** Investigate bugs, unexpected behavior, console errors, broken features.
 

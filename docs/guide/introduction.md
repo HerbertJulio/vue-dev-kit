@@ -19,23 +19,34 @@ Once installed in your Vue project, Claude automatically follows your architectu
 
 ## Your AI Team
 
+Vue Dev Kit has **4 agents** organized by two scenarios:
+
 ```mermaid
 graph TB
-    You["You (Developer)"] --> Claude["Claude Code"]
-    Claude --> Builder["🏗️ @vue-builder<br/><i>Create modules, components, services</i>"]
-    Claude --> Reviewer["✅ @vue-reviewer<br/><i>Review, explore, performance</i>"]
-    Claude --> Migrator["🔄 @vue-migrator<br/><i>Options → setup, JS → TS</i>"]
-    Claude --> Doctor["🔍 @vue-doctor<br/><i>Trace bugs through layers</i>"]
+    subgraph daily["🏗️ Day-to-Day Development"]
+        Builder["@vue-builder<br/><i>Create modules, components,<br/>services, composables, tests</i>"]
+        Reviewer["@vue-reviewer<br/><i>Review PRs, explore modules,<br/>check performance</i>"]
+        Doctor["@vue-doctor<br/><i>Investigate bugs, trace errors<br/>through architecture layers</i>"]
+    end
 
-    Builder --> Arch["docs/ARCHITECTURE.md"]
-    Reviewer --> Arch
-    Migrator --> Arch
-    Doctor --> Arch
+    subgraph migration["🔄 Architecture Migration"]
+        Migrator["@vue-migrator<br/><i>Options → setup, JS → TS,<br/>Vuex → Pinia + Vue Query</i>"]
+        ReviewerM["@vue-reviewer<br/><i>Diagnose current state,<br/>validate after migration</i>"]
+    end
 
-    style You fill:#42b883,color:#fff
-    style Claude fill:#35495e,color:#fff
-    style Arch fill:#42b883,color:#fff
+    style daily fill:#f0faf5,stroke:#42b883
+    style migration fill:#f0f4fa,stroke:#35495e
+    style Builder fill:#42b883,color:#fff
+    style Reviewer fill:#42b883,color:#fff
+    style Doctor fill:#42b883,color:#fff
+    style Migrator fill:#35495e,color:#fff
+    style ReviewerM fill:#35495e,color:#fff
 ```
+
+| Scenario | Agents | When |
+|----------|--------|------|
+| **Day-to-Day** | `@vue-builder` `@vue-reviewer` `@vue-doctor` | Building features, reviewing code, fixing bugs |
+| **Migration** | `@vue-migrator` `@vue-reviewer` | Modernizing legacy projects to the target architecture |
 
 ## Target Stack
 
@@ -79,10 +90,17 @@ sequenceDiagram
 
 ## Tutorials
 
-Step-by-step guides with real-world code:
+### 🏗️ Day-to-Day Development
+
+Use `@vue-builder`, `@vue-reviewer`, and `@vue-doctor` for everyday work:
 
 - [Build a CRUD Module](/tutorials/crud-module) — Complete Orders module from scratch
 - [Create a Service Layer](/tutorials/service-layer) — Integrate a new API endpoint
 - [Build Forms with Validation](/tutorials/forms) — Zod + useMutation + error handling
 - [Pagination + Filters](/tutorials/pagination-filters) — Lists with search, filters, and pagination
-- [Migrate Your Project](/tutorials/migrate-project) — Legacy architecture → Vue Dev Kit standard
+
+### 🔄 Architecture Migration
+
+Use `@vue-migrator` and `@vue-reviewer` to modernize legacy projects:
+
+- [Migrate Your Project](/tutorials/migrate-project) — 6-phase guide from legacy to target architecture

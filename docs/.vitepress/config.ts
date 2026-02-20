@@ -16,7 +16,13 @@ export default withMermaid(defineConfig({
 
     nav: [
       { text: 'Guide', link: '/guide/introduction' },
-      { text: 'Tutorials', link: '/tutorials/crud-module' },
+      {
+        text: 'Tutorials',
+        items: [
+          { text: 'Day-to-Day', link: '/tutorials/crud-module' },
+          { text: 'Migration', link: '/tutorials/migrate-project' },
+        ],
+      },
       { text: 'Reference', link: '/reference/agents' },
       { text: 'Customization', link: '/customization/creating-agents' },
     ],
@@ -42,16 +48,18 @@ export default withMermaid(defineConfig({
       ],
       '/tutorials/': [
         {
-          text: 'How To Build',
+          text: '🏗️ Day-to-Day Development',
+          collapsed: false,
           items: [
-            { text: 'CRUD Module', link: '/tutorials/crud-module' },
-            { text: 'Service Layer', link: '/tutorials/service-layer' },
-            { text: 'Forms with Validation', link: '/tutorials/forms' },
+            { text: 'Build a CRUD Module', link: '/tutorials/crud-module' },
+            { text: 'Create a Service Layer', link: '/tutorials/service-layer' },
+            { text: 'Build Forms with Validation', link: '/tutorials/forms' },
             { text: 'Pagination + Filters', link: '/tutorials/pagination-filters' },
           ],
         },
         {
-          text: 'Migration',
+          text: '🔄 Architecture Migration',
+          collapsed: false,
           items: [
             { text: 'Migrate Your Project', link: '/tutorials/migrate-project' },
           ],
