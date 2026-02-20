@@ -1,17 +1,17 @@
-Migre um módulo inteiro para a arquitetura-alvo de `docs/ARCHITECTURE.md`.
+Migrate an entire module to the target architecture from `docs/ARCHITECTURE.md`.
 
-Módulo/Path: $ARGUMENTS
+Module/Path: $ARGUMENTS
 
-## Passos
+## Steps
 
-Use o `@migration-orchestrator` para coordenar a migração completa nas fases:
+Use `@vue-migrator` to coordinate the full migration in phases:
 
-1. **Fase 0 – Análise**: `@code-archaeologist` mapeia o módulo
-2. **Fase 1 – Estrutura**: Criar `src/modules/[nome]/` e mover arquivos
-3. **Fase 2 – Types**: Criar `.types.ts` + `.contracts.ts` + adapter
-4. **Fase 3 – Services**: Migrar para service puro (sem try/catch)
-5. **Fase 4 – State**: Server state → Vue Query, Client state → Pinia
-6. **Fase 5 – Componentes**: Options → script setup + composition
-7. **Fase 6 – Review**: `@code-reviewer` valida conformidade
+1. **Phase 0 – Analysis**: Map the module (files, patterns, dependencies)
+2. **Phase 1 – Structure**: Create `src/modules/[name]/` and move files
+3. **Phase 2 – Types**: Create `.types.ts` + `.contracts.ts` + adapter
+4. **Phase 3 – Services**: Migrate to pure service (no try/catch)
+5. **Phase 4 – State**: Server state → Vue Query, Client state → Pinia
+6. **Phase 5 – Components**: Options → script setup + composition
+7. **Phase 6 – Review**: Validate conformance
 
-Validar build/tsc/testes após cada fase. Pedir aprovação antes de cada fase.
+Validate build/tsc/tests after each phase. Ask for approval before each phase.

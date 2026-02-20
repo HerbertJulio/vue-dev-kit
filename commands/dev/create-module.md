@@ -1,14 +1,15 @@
-Crie um novo módulo de feature completo seguindo `docs/ARCHITECTURE.md`.
+Create a new complete feature module following `docs/ARCHITECTURE.md`.
 
-Nome do módulo: $ARGUMENTS
+Module name: $ARGUMENTS
 
-## Passos
+## Steps
 
-1. Leia `docs/ARCHITECTURE.md` seções 2, 3 e 4.
+1. Read `docs/ARCHITECTURE.md` sections 2, 3 and 4.
 
-2. Crie a estrutura de diretórios:
-```
-src/modules/[nome-em-kebab-case]/
+2. Create the directory structure:
+
+```text
+src/modules/[kebab-case-name]/
 ├── components/
 ├── composables/
 ├── services/
@@ -20,21 +21,22 @@ src/modules/[nome-em-kebab-case]/
 └── index.ts
 ```
 
-3. Crie o `index.ts` com barrel export vazio:
+3. Create `index.ts` with empty barrel export:
+
 ```typescript
-// src/modules/[nome]/index.ts
-// Public API deste módulo
+// src/modules/[name]/index.ts
+// Public API for this module
 ```
 
-4. Pergunte ao usuário:
-   - Quais endpoints da API este módulo consome?
-   - Qual tipo de UI? (lista com CRUD, dashboard, form, detalhe)
+4. Ask the user:
+   - Which API endpoints does this module consume?
+   - What UI type? (list with CRUD, dashboard, form, detail)
 
-5. Com base na resposta, use os agentes:
-   - `@service-creator` para criar types + contracts + adapter + service
-   - `@composable-creator` para criar composables com Vue Query
-   - `@vue-component-creator` para criar os componentes
+5. Use `@vue-builder` to create bottom-up:
+   - Types + contracts + adapter + service
+   - Composables with Vue Query
+   - Components with script setup
 
-6. Registre a rota no router.
+6. Register the route in the router.
 
-7. Valide: `npx tsc --noEmit && npx vite build`
+7. Validate: `npx tsc --noEmit && npx vite build`

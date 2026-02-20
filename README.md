@@ -8,12 +8,12 @@
 
 ## ⚠️ Token Consumption Notice
 
-Agents consume tokens proportional to their complexity. For budget-conscious usage, Vue Dev Kit ships with **Lite agents** that use **40-60% fewer tokens**.
+Agents consume tokens proportional to their complexity. For budget-conscious usage, Vue Dev Kit ships with **Lite agents** that use `model: haiku` — **significantly cheaper per token**.
 
-| Mode | Module scaffold | Service + types | Code review | Component |
-|------|----------------|----------------|-------------|-----------|
-| **Full** | ~15-25k | ~5-8k | ~8-15k | ~3-5k |
-| **Lite** | ~8-12k | ~3-5k | ~3-5k | ~2-3k |
+| Mode | Model | Module scaffold | Code review | Bug investigation |
+|------|-------|----------------|-------------|-------------------|
+| **Full** | Sonnet/Opus | ~15-25k tokens | ~8-15k tokens | ~5-10k tokens |
+| **Lite** | Haiku | ~5-10k tokens | ~3-5k tokens | ~2-5k tokens |
 
 Full agents read `ARCHITECTURE.md`, run validation, and produce detailed output. Lite agents embed key rules inline and skip validation steps.
 
@@ -21,7 +21,7 @@ Full agents read `ARCHITECTURE.md`, run validation, and produce detailed output.
 
 ## 📑 Table of Contents
 
-- [Quick Start (3 Minutes)](#-quick-start-3-minutes)
+- [Quick Start](#-quick-start)
 - [Meet Your Vue Dev Team](#-meet-your-vue-dev-team)
 - [Slash Commands](#-slash-commands)
 - [Architecture at a Glance](#-architecture-at-a-glance)
@@ -63,48 +63,75 @@ bash C:\path\to\vue-dev-kit\setup.sh
 
 </details>
 
-> Use `setup.sh --lite` to install Lite agents (40-60% fewer tokens).
+> Use `setup.sh --lite` to install Lite agents (Haiku model, lower cost).
 
 **3. Start building**
 
 ```bash
 claude
-"Use @feature-builder to create a domains module with CRUD"
+"Use @vue-builder to create a domains module with CRUD"
 ```
 
 ---
 
 ## 👥 Meet Your Vue Dev Team
 
-### 🏗️ Builders — Create Features
+### 🏗️ @vue-builder — Build New Code
 
-| Agent | What it does |
-|-------|-------------|
-| **[@feature-builder](agents/development/feature-builder.md)** | Creates a complete module from scratch — types, services, adapters, composables, components, views, route |
-| **[@vue-component-creator](agents/development/vue-component-creator.md)** | Creates components with `<script setup lang="ts">`, typed props/emits, composition pattern |
-| **[@service-creator](agents/development/service-creator.md)** | Creates the full data layer: `.types.ts` + `.contracts.ts` + adapter + service |
-| **[@composable-creator](agents/development/composable-creator.md)** | Creates composables with Vue Query — queries, mutations, shared logic |
+Creates modules, components, services, composables, and tests following your architecture.
 
-### ✅ Quality — Review & Debug
+**Detects scope automatically:** module | component | service | composable | test
 
-| Agent | What it does |
-|-------|-------------|
-| **[@code-reviewer](agents/quality/code-reviewer.md)** | Reviews code against `ARCHITECTURE.md` — 14 automated checks + manual review, severity classification |
-| **[@bug-hunter](agents/quality/bug-hunter.md)** | Traces bugs through architecture layers: Component → Composable → Service → Adapter → API |
+```bash
+"Use @vue-builder to create the payments module with CRUD"
+"Use @vue-builder to create a DataTable component"
+"Use @vue-builder to create the /v4/domains service layer"
+"Use @vue-builder to create tests for the domains adapter"
+```
 
-### 🔍 Analysis — Understand Before Changing
+---
 
-| Agent | What it does |
-|-------|-------------|
-| **[@code-archaeologist](agents/analysis/code-archaeologist.md)** | Maps existing code: structure inventory, anti-pattern detection, dependency analysis (read-only) |
-| **[@performance-profiler](agents/analysis/performance-profiler.md)** | Detects performance issues: bundle size, missing lazy loading, queries without staleTime, heavy renders |
+### ✅ @vue-reviewer — Review & Analyze
 
-### 🔄 Migration — Legacy to Modern
+Reviews code against `ARCHITECTURE.md`, explores modules, and detects performance issues.
 
-| Agent | What it does |
-|-------|-------------|
-| **[@migration-orchestrator](agents/orchestrators/migration-orchestrator.md)** | Migrates entire modules in 6 phases — delegates to archaeologist and reviewer for analysis/validation |
-| **[@vue-component-migrator](agents/orchestrators/vue-component-migrator.md)** | Migrates single components: Options API → script setup, mixins → composables, prop drilling → composition |
+**Detects scope automatically:** review | explore | performance
+
+```bash
+"Use @vue-reviewer to review my last commit"
+"Use @vue-reviewer to explore src/modules/auth/"
+"Use @vue-reviewer to check performance of the dashboard module"
+```
+
+**Review output:** 🔴 Violations | 🟡 Attention | 🟢 Compliant | ✨ Highlights → Verdict: ✅/⚠️/❌
+
+---
+
+### 🔄 @vue-migrator — Modernize Legacy Code
+
+Migrates Options API → script setup, JS → TS, and full module modernization.
+
+**Detects scope automatically:** module (6 phases) | component
+
+```bash
+"Use @vue-migrator to migrate the billing module"
+"Use @vue-migrator to convert UserSettings.vue to script setup"
+```
+
+**Module mode:** Analysis → Structure → Types → Services → State → Components (with approval gates)
+
+---
+
+### 🔍 @vue-doctor — Investigate Bugs
+
+Traces bugs through architecture layers to find root causes, not workarounds.
+
+**Trace path:** Component → Composable → Adapter → Service → API
+
+```bash
+"Use @vue-doctor to investigate the 500 error on login"
+"Use @vue-doctor to find why the dashboard data is stale"
+```
 
 ---
 
@@ -128,7 +155,7 @@ Quick shortcuts you invoke with `/command` in Claude Code.
 | Command | What it does |
 |---------|-------------|
 | `/review-review [scope]` | Full code review (automated + manual) |
-| `/review-check-architecture [module]` | 14 automated conformance checks |
+| `/review-check-architecture [module]` | Automated conformance checks |
 | `/review-fix-violations [module]` | Auto-fix violations by priority |
 
 ### Migration
@@ -185,21 +212,24 @@ For cost-conscious usage or simpler tasks, install Lite agents:
 bash /path/to/vue-dev-kit/setup.sh --lite
 ```
 
-Lite agents have **the same architectural knowledge** but:
-- **Embed rules inline** instead of reading `ARCHITECTURE.md` each time
-- **Skip validation steps** (no `tsc --noEmit`, no build check)
-- **Shorter instructions** — focused on output, not process
-- **~40-60% fewer tokens** per invocation
+Lite agents use `model: haiku` in their frontmatter, which means Claude Code runs them on the **Haiku model** instead of Sonnet/Opus — significantly cheaper.
 
-Available Lite agents:
+| Aspect | Full | Lite |
+|--------|------|------|
+| **Model** | Sonnet/Opus (default) | Haiku |
+| **First action** | Reads ARCHITECTURE.md | Rules inline |
+| **Validation** | tsc, build, vitest | Skipped |
+| **Size** | ~80-120 lines | ~30-50 lines |
+| **Cost** | ~5-25k tokens | ~2-10k tokens |
 
-| Lite Agent | Full Equivalent | Token Savings |
-|-----------|----------------|---------------|
-| [@feature-builder](agents-lite/development/feature-builder.md) | @feature-builder | ~50% |
-| [@service-creator](agents-lite/development/service-creator.md) | @service-creator | ~45% |
-| [@vue-component-creator](agents-lite/development/vue-component-creator.md) | @vue-component-creator | ~50% |
-| [@composable-creator](agents-lite/development/composable-creator.md) | @composable-creator | ~45% |
-| [@code-reviewer](agents-lite/quality/code-reviewer.md) | @code-reviewer | ~55% |
+**Same agents, same names:**
+
+| Lite Agent | What it does |
+|-----------|-------------|
+| @vue-builder | Create modules, components, services, composables, tests |
+| @vue-reviewer | Review code, explore modules, check performance |
+| @vue-migrator | Migrate Options → setup, modernize modules |
+| @vue-doctor | Investigate bugs, trace errors |
 
 > **When to use Full vs Lite?**
 > - **Full**: new modules, PRs, complex migrations, onboarding
@@ -230,7 +260,7 @@ Add to your Claude Code MCP config (`~/.claude/mcp.json`):
 
 - Agents get **current API docs** instead of relying on training data
 - Reduces hallucination for Vue 3, Pinia, and TanStack Query APIs
-- Especially useful for `@composable-creator` and `@service-creator` which generate framework-specific code
+- Especially useful for `@vue-builder` which generates framework-specific code
 - Works with both Full and Lite agents
 
 ---
@@ -239,7 +269,7 @@ Add to your Claude Code MCP config (`~/.claude/mcp.json`):
 
 ### Add an Agent
 
-Create `.claude/agents/[category]/my-agent.md`:
+Create `.claude/agents/my-agent.md`:
 
 ```markdown
 ---

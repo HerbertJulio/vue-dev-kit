@@ -16,7 +16,7 @@ if [[ "${1:-}" == "--lite" ]]; then
 fi
 
 if $LITE_MODE; then
-    echo -e "\n${BLUE}🪶 Vue Dev Kit — Lite Installation${NC}\n"
+    echo -e "\n${BLUE}🪶 Vue Dev Kit — Lite Installation (Haiku model)${NC}\n"
 else
     echo -e "\n${BLUE}🛠️  Vue Dev Kit — Full Installation${NC}\n"
 fi
@@ -32,7 +32,7 @@ echo -e "${BLUE}Installing into: $(pwd)${NC}\n"
 
 # 1. Install agents
 if $LITE_MODE; then
-    echo -e "${BLUE}📦 Installing Lite agents (~40-60% fewer tokens)...${NC}"
+    echo -e "${BLUE}📦 Installing Lite agents (Haiku model, lower cost)...${NC}"
     AGENTS_DIR="$SCRIPT_DIR/agents-lite"
 else
     echo -e "${BLUE}📦 Installing Full agents...${NC}"
@@ -43,9 +43,8 @@ mkdir -p .claude/agents
 
 count=0
 while IFS= read -r agent_file; do
-    relative="${agent_file#$AGENTS_DIR/}"
-    target=".claude/agents/$relative"
-    mkdir -p "$(dirname "$target")"
+    filename=$(basename "$agent_file")
+    target=".claude/agents/$filename"
     cp "$agent_file" "$target"
     name=$(grep -m1 "^name:" "$agent_file" | cut -d: -f2 | tr -d ' ')
     echo -e "  ${GREEN}✅ @$name${NC}"
@@ -96,23 +95,23 @@ echo -e "${GREEN}  🎉 Vue Dev Kit installed successfully!${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}\n"
 
 if $LITE_MODE; then
-    echo -e "${YELLOW}Lite mode: agents use fewer tokens but skip validation steps.${NC}"
+    echo -e "${YELLOW}Lite mode: agents run on Haiku model (lower cost, faster).${NC}"
     echo -e "${YELLOW}To switch to Full agents later, run: setup.sh (without --lite)${NC}\n"
 fi
 
 echo "Open Claude Code and try:"
 echo ""
-echo "  claude                              # open"
-echo "  /agents                             # list agents"
-echo "  /dev-create-module marketplace      # scaffold a module"
-echo "  /review-check-architecture          # validate architecture"
-echo "  /review-review                      # code review"
+echo "  claude                                    # open"
+echo "  /agents                                   # list agents"
+echo "  /dev-create-module marketplace            # scaffold a module"
+echo "  /review-check-architecture                # validate architecture"
+echo "  /review-review                            # code review"
 echo ""
 echo "Or just ask:"
 echo ""
-echo '  "Use @feature-builder to create the domains module with CRUD"'
-echo '  "Use @code-archaeologist to map src/modules/auth/"'
-echo '  "Use @bug-hunter to investigate the dashboard error"'
+echo '  "Use @vue-builder to create the domains module with CRUD"'
+echo '  "Use @vue-reviewer to explore src/modules/auth/"'
+echo '  "Use @vue-doctor to investigate the dashboard error"'
 echo ""
 echo -e "${BLUE}📖 Read docs/ARCHITECTURE.md to understand the patterns.${NC}"
 echo -e "${BLUE}📖 Customize CLAUDE.md and ARCHITECTURE.md for your project.${NC}"

@@ -158,7 +158,7 @@ Migrates an entire module through 6 phases.
 /migration-migrate-module src/views/marketplace/
 ```
 
-Delegates to `@migration-orchestrator`. Includes approval gates between phases.
+Delegates to `@vue-migrator`. Includes approval gates between phases.
 
 ---
 

@@ -4,7 +4,7 @@ You can extend Vue Dev Kit by creating your own agents tailored to your project'
 
 ## Agent File Structure
 
-Create a file at `.claude/agents/[category]/agent-name.md`:
+Create a file at `.claude/agents/agent-name.md`:
 
 ```markdown
 ---
@@ -44,9 +44,14 @@ What the agent produces.
 | `name` | Yes | Agent identifier (used with `@name`) |
 | `description` | Yes | When Claude should delegate to this agent |
 | `tools` | Yes | Tools the agent can use |
+| `model` | No | Model override (`haiku` for lower cost) |
 
 ::: tip Description Matters
 The `description` field determines **when Claude automatically delegates** to your agent. Use strong language like "MUST BE USED" to ensure delegation.
+:::
+
+::: tip Model Override
+Add `model: haiku` to the frontmatter to run the agent on the Haiku model — significantly cheaper per token. Use this for simpler tasks that don't need the full Sonnet/Opus capabilities.
 :::
 
 ### Available Tools
@@ -120,16 +125,29 @@ Validate the project is ready for deployment.
 ✅ Ready to deploy or ❌ Issues found (with details)
 ```
 
-## Organization
+### Lite Agent (Haiku)
 
-Organize agents by category:
+```markdown
+---
+name: quick-scaffold
+description: "MUST BE USED for quick component scaffolding."
+model: haiku
+tools: Read, Write, Edit, Glob, Grep
+---
 
-```
-.claude/agents/
-├── development/     ← Building features
-├── quality/         ← Reviewing and testing
-├── analysis/        ← Understanding code
-└── orchestrators/   ← Multi-step workflows
+# Quick Scaffold
+
+## Mission
+Quickly scaffold components with minimal token usage.
+
+## Rules (inline — no ARCHITECTURE.md read)
+- `<script setup lang="ts">`
+- defineProps<T>() and defineEmits<T>()
+- < 200 lines
+
+## Workflow
+1. Create component at the right location
+2. Apply script setup template
 ```
 
 ## Tips
@@ -137,4 +155,5 @@ Organize agents by category:
 - Keep agents focused on **one responsibility**
 - Always reference `ARCHITECTURE.md` for consistency
 - Use `Bash` sparingly — prefer `Read`/`Write`/`Edit`
+- Use `model: haiku` for simpler tasks to save tokens
 - Test your agent by asking Claude to use it: `"Use @my-agent to..."`

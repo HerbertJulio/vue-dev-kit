@@ -2,7 +2,7 @@
 
 Each operation has a different token cost depending on complexity. Use this table to estimate usage.
 
-## Estimated Consumption
+## Full Agents (Sonnet/Opus)
 
 | Operation | Tokens | Notes |
 |-----------|--------|-------|
@@ -12,16 +12,28 @@ Each operation has a different token cost depending on complexity. Use this tabl
 | `/dev-create-test` | ~3-8k | Depends on file complexity |
 | `/dev-create-module` | ~15-25k | Full module scaffold |
 | `/dev-generate-types` | ~3-5k | Types + contracts + adapter |
-| `/review-check-architecture` | ~5-10k | 14 automated checks |
+| `/review-check-architecture` | ~5-10k | Automated checks |
 | `/review-review` | ~8-15k | Full review with automated + manual |
 | `/review-fix-violations` | ~5-15k | Depends on violation count |
 | `/docs-onboard` | ~3-5k | Module summary |
 | `/migration-migrate-component` | ~5-10k | Single component migration |
-| `@bug-hunter` | ~5-15k | Depends on bug complexity |
-| `@code-archaeologist` | ~5-10k | Module exploration |
-| `@performance-profiler` | ~5-10k | Performance analysis |
-| `@migration-orchestrator` | ~30-80k | Full module migration (6 phases) |
+| `/migration-migrate-module` | ~30-80k | Full module migration (6 phases) |
+| `@vue-doctor` (bug) | ~5-15k | Depends on bug complexity |
+
+## Lite Agents (Haiku)
+
+Lite agents use `model: haiku` — significantly cheaper per token.
+
+| Operation | Tokens | Savings vs Full |
+|-----------|--------|-----------------|
+| Component scaffold | ~2-3k | ~50% |
+| Service layer | ~3-5k | ~40% |
+| Code review | ~3-5k | ~55% |
+| Module scaffold | ~5-10k | ~55% |
+| Bug investigation | ~2-5k | ~50% |
 
 ::: tip Cost Optimization
-For large modules, consider migrating incrementally — one component at a time with `/migration-migrate-component` instead of the full `@migration-orchestrator`.
+- Use **Lite agents** for rapid iteration and simple tasks
+- Use **Full agents** for new modules, PRs, and complex migrations
+- For large modules, migrate incrementally — one component at a time with `/migration-migrate-component` instead of the full module migration
 :::

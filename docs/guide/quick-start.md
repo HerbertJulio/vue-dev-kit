@@ -10,8 +10,8 @@ After [installing](/guide/installation) Vue Dev Kit, open Claude Code in your pr
 
 Or ask conversationally:
 
-```
-"Use @code-archaeologist to explain the auth module"
+```bash
+"Use @vue-reviewer to explore the auth module"
 ```
 
 ## Create a New Feature Module
@@ -22,12 +22,13 @@ Or ask conversationally:
 
 Or with more context:
 
-```
-"Use @feature-builder to create the domains module with CRUD"
+```bash
+"Use @vue-builder to create the domains module with CRUD"
 ```
 
 This scaffolds the full module structure:
-```
+
+```text
 src/modules/domains/
 ├── components/
 ├── composables/
@@ -90,8 +91,8 @@ Creates 4 files: `types` + `contracts` + `adapter` + `service`.
 
 ## Investigate a Bug
 
-```
-"Use @bug-hunter to investigate why the domains list isn't loading"
+```bash
+"Use @vue-doctor to investigate why the domains list isn't loading"
 ```
 
 ## What's Next

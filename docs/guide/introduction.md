@@ -12,10 +12,10 @@ Once installed in your Vue project, Claude automatically follows your architectu
 
 | Feature | Count | Description |
 |---------|-------|-------------|
-| AI Agents | 10 | Specialized subagents for building, reviewing, analyzing, and migrating |
-| Slash Commands | 13 | Shortcuts to scaffold and validate code |
+| AI Agents | 4 | Consolidated specialists: builder, reviewer, migrator, doctor |
+| Lite Agents | 4 | Same agents running on Haiku model (lower cost) |
+| Slash Commands | 12 | Shortcuts to scaffold and validate code |
 | Architecture Guide | 1 | Comprehensive source of truth for all patterns |
-| Automated Checks | 14 | Conformance validations against your architecture |
 
 ## Target Stack
 
@@ -37,12 +37,12 @@ You can adapt the patterns to your own stack by editing `docs/ARCHITECTURE.md`. 
 2. **Open Claude Code** in your project
 3. **Use agents and commands** — Claude automatically delegates to the right specialist
 
-```
+```text
 You: "Create a domains module with CRUD"
                     ↓
-Claude delegates to @feature-builder
+Claude delegates to @vue-builder
                     ↓
-@feature-builder reads ARCHITECTURE.md
+@vue-builder reads ARCHITECTURE.md
                     ↓
 Scaffolds: types → adapter → service → composable → components → view → route
 ```

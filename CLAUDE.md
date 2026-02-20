@@ -23,33 +23,27 @@ Development toolkit for Vue 3 projects with TypeScript. Includes AI agents, slas
 
 | Agent | When to Use |
 |-------|-------------|
-| `@feature-builder` | Create a new module/feature from scratch |
-| `@vue-component-creator` | Create components following conventions |
-| `@service-creator` | Create service + adapter + types for a resource |
-| `@composable-creator` | Create composables with Vue Query |
-| `@code-reviewer` | Review code / PRs |
-| `@bug-hunter` | Investigate and fix bugs |
-| `@code-archaeologist` | Map existing code before changing it |
-| `@performance-profiler` | Analyze performance |
-| `@migration-orchestrator` | Migrate legacy module to new architecture |
-| `@vue-component-migrator` | Migrate component from Options → script setup |
+| `@vue-builder` | Create modules, components, services, composables, or tests |
+| `@vue-reviewer` | Review code, check architecture, explore modules, analyze performance |
+| `@vue-migrator` | Migrate legacy code (Options → setup, JS → TS, module modernization) |
+| `@vue-doctor` | Investigate bugs, trace errors through architecture layers |
 
 ### Available Slash Commands
 
 | Command | What it does |
 |---------|-------------|
-| `/create-module [name]` | Full module scaffold |
-| `/create-component [name]` | Create component with standard template |
-| `/create-service [name]` | Create service + adapter + types |
-| `/create-composable [name]` | Create composable with Vue Query |
-| `/create-test [file]` | Create tests for a file |
-| `/review` | Full code review against ARCHITECTURE.md |
-| `/check-architecture` | Validate conformance with ARCHITECTURE.md |
-| `/fix-violations` | Find and fix architecture violations |
-| `/migrate-component [file]` | Migrate component Options → setup |
-| `/migrate-module [path]` | Migrate entire module |
-| `/generate-types [endpoint]` | Generate types/contracts/adapter from endpoint |
-| `/onboard [module]` | Quick module overview for onboarding |
+| `/dev-create-module [name]` | Full module scaffold |
+| `/dev-create-component [name]` | Create component with standard template |
+| `/dev-create-service [resource]` | Create service + adapter + types |
+| `/dev-create-composable [name]` | Create composable with Vue Query |
+| `/dev-create-test [file]` | Create tests for a file |
+| `/dev-generate-types [endpoint]` | Generate types/contracts/adapter from endpoint |
+| `/review-review [scope]` | Full code review against ARCHITECTURE.md |
+| `/review-check-architecture [module]` | Validate conformance with ARCHITECTURE.md |
+| `/review-fix-violations [module]` | Find and fix architecture violations |
+| `/migration-migrate-component [file]` | Migrate component Options → setup |
+| `/migration-migrate-module [path]` | Migrate entire module |
+| `/docs-onboard [module]` | Quick module overview for onboarding |
 
 ### Key Patterns (details in docs/ARCHITECTURE.md)
 

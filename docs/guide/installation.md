@@ -22,24 +22,14 @@ cd /path/to/your-vue-project
 
 The installer creates the following in your project:
 
-```
+```text
 .claude/
-├── agents/              ← 10 AI subagents
-│   ├── development/
-│   │   ├── feature-builder.md
-│   │   ├── vue-component-creator.md
-│   │   ├── service-creator.md
-│   │   └── composable-creator.md
-│   ├── quality/
-│   │   ├── code-reviewer.md
-│   │   └── bug-hunter.md
-│   ├── analysis/
-│   │   ├── code-archaeologist.md
-│   │   └── performance-profiler.md
-│   └── orchestrators/
-│       ├── migration-orchestrator.md
-│       └── vue-component-migrator.md
-└── commands/            ← 13 slash commands
+├── agents/              ← 4 AI subagents
+│   ├── vue-builder.md
+│   ├── vue-reviewer.md
+│   ├── vue-migrator.md
+│   └── vue-doctor.md
+└── commands/            ← 12 slash commands
     ├── dev/
     │   ├── create-module.md
     │   ├── create-component.md
@@ -64,6 +54,16 @@ CLAUDE.md                ← Project config for Claude
 ::: warning Non-destructive
 The installer **never overwrites** existing `ARCHITECTURE.md` or `CLAUDE.md` files. If they already exist, they are skipped.
 :::
+
+## Lite Installation
+
+For lower token consumption, install Lite agents that run on the Haiku model:
+
+```bash
+/path/to/vue-dev-kit/setup.sh --lite
+```
+
+Lite agents have the same names and capabilities but use `model: haiku` in their frontmatter, resulting in significantly lower cost per invocation.
 
 ## Verify Installation
 

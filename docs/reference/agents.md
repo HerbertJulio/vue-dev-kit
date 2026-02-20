@@ -2,176 +2,121 @@
 
 Agents are specialized AIs that Claude delegates to automatically or that you invoke with `@name`.
 
-## Development Agents
+Vue Dev Kit includes **4 consolidated agents**, each handling multiple scopes via automatic detection.
 
-### @feature-builder
+## @vue-builder — Build New Code
 
-**When to use:** Create a new feature module from scratch.
+**When to use:** Create any new code — modules, components, services, composables, or tests.
 
-Creates the entire modular structure bottom-up: types → adapter → service → store → composables → components → view → route → barrel export.
+**Scope detection:** module | component | service | composable | test
 
-```
-"Use @feature-builder to create the domains module with CRUD"
-```
-
-**Workflow:**
-1. Understands requirements
-2. Reads `ARCHITECTURE.md`
-3. Scaffolds directories
-4. Creates types and contracts
-5. Creates adapter
-6. Creates service
-7. Creates store (if needed)
-8. Creates composables
-9. Creates components
-10. Creates view
-11. Registers route
-12. Creates barrel export
-13. Validates with `tsc --noEmit`
-
----
-
-### @vue-component-creator
-
-**When to use:** Create any Vue component — form, table, modal, list, card, or UI element.
-
-```
-"Use @vue-component-creator to create a DataTable component"
+```bash
+"Use @vue-builder to create the payments module with CRUD"
+"Use @vue-builder to create a DataTable component"
+"Use @vue-builder to create the /v4/domains service layer"
+"Use @vue-builder to create tests for the domains adapter"
 ```
 
-Determines the right location (module component vs shared), applies the script setup template, and ensures size limits.
+### Module mode
 
----
+1. Asks: resource name, endpoints, UI type, client state needs
+2. Scaffolds `src/modules/[kebab-name]/` with all subdirectories
+3. Creates bottom-up: types → contracts → adapter → service → store → composables → components → view
+4. Registers lazy route, creates barrel export
+5. Validates with `tsc --noEmit`
 
-### @service-creator
+### Component mode
 
-**When to use:** Create API integration (service + adapter + types).
+- Places in `src/modules/[feature]/components/` or `src/shared/components/`
+- `<script setup lang="ts">` with typed defineProps/defineEmits
+- < 200 lines, no prop drilling
 
-```
-"Use @service-creator for the /v4/domains endpoint"
-```
+### Service mode
 
 Creates 4 files:
-- `[resource].types.ts` — API response types
-- `[resource].contracts.ts` — App contracts
-- `[resource]-adapter.ts` — Parser functions
-- `[resource]-service.ts` — HTTP calls
+- `.types.ts` — API response types (snake_case)
+- `.contracts.ts` — App contracts (camelCase)
+- `-adapter.ts` — Pure bidirectional parser
+- `-service.ts` — HTTP calls only
+
+### Composable mode
+
+- **Query**: useQuery with reactive queryKey, staleTime, adapter
+- **Mutation**: useMutation with invalidateQueries
+- **Shared logic**: ref/computed with lifecycle hooks
+
+### Test mode
+
+Priority: adapters (pure, easy) > composables (mock service) > components (@vue/test-utils)
 
 ---
 
-### @composable-creator
+## @vue-reviewer — Review & Analyze
 
-**When to use:** Create composables with Vue Query or shared logic.
+**When to use:** Review code changes, explore modules, analyze performance.
 
+**Scope detection:** review | explore | performance
+
+```bash
+"Use @vue-reviewer to review my last commit"
+"Use @vue-reviewer to explore src/modules/auth/"
+"Use @vue-reviewer to check performance of the dashboard"
 ```
-"Use @composable-creator to fetch the domains list"
-```
 
-Provides templates for queries, mutations, and shared logic composables with proper Vue Query integration.
+### Review mode
+
+- Runs automated checks: `tsc`, `eslint`, `vitest`, `build`
+- Pattern checks against `ARCHITECTURE.md`
+- Classification: 🔴 Violation | 🟡 Attention | 🟢 Compliant | ✨ Highlight
+- **Verdict:** ✅ Approved | ⚠️ With caveats | ❌ Requires changes
+
+### Explore mode
+
+- Inventories files by type
+- Detects Options vs setup, JS vs TS, mixins, anti-patterns
+- Maps dependencies (fan-in / fan-out)
+- Read-only report with facts and numbers
+
+### Performance mode
+
+- Bundle size analysis via `vite build`
+- Lazy loading verification
+- Queries without staleTime
+- Deep watchers, inline template objects
+- Bottlenecks sorted by user impact
+
+::: tip Read-only
+The reviewer never modifies files. It suggests fixes with code snippets you can apply.
+:::
 
 ---
 
-## Quality Agents
+## @vue-migrator — Modernize Legacy Code
 
-### @code-reviewer
+**When to use:** Migrate Options API → script setup, JS → TS, or full module modernization.
 
-**When to use:** Review code changes before merging, validate PRs.
+**Scope detection:** module (6 phases) | component
 
-```
-"Use @code-reviewer to review my last commit"
-```
-
-**Checks:**
-- Runs `tsc`, `eslint`, `vitest`, `build`
-- Reviews against `ARCHITECTURE.md`
-- Classifies issues:
-  - 🔴 **Violations** — Must fix
-  - 🟡 **Attention** — Should fix
-  - 🟢 **Compliant** — Good
-  - ✨ **Highlights** — Excellent patterns
-
-**Verdict:** ✅ Approved | ⚠️ With caveats | ❌ Requires changes
-
----
-
-### @bug-hunter
-
-**When to use:** Investigate bugs, unexpected behavior, console errors.
-
-```
-"Use @bug-hunter to investigate the 500 error on login"
+```bash
+"Use @vue-migrator to migrate the billing module"
+"Use @vue-migrator to convert UserSettings.vue to script setup"
 ```
 
-Traces through the architecture top-down: Component → Composable → Service → Adapter → API. Finds root causes, not workarounds.
+### Module mode (6 phases)
 
----
-
-## Analysis Agents
-
-### @code-archaeologist
-
-**When to use:** Explore existing code before changes, onboarding, mapping modules.
-
-```
-"Use @code-archaeologist to map src/modules/auth/"
-```
-
-Read-only exploration that produces:
-- Structure inventory
-- API style analysis
-- Anti-pattern detection vs `ARCHITECTURE.md`
-- Dependency mapping (fan-in/fan-out)
-
----
-
-### @performance-profiler
-
-**When to use:** Analyze performance before/after optimizations.
-
-```
-"Use @performance-profiler on the dashboard module"
-```
-
-Detects:
-- Bundle size issues
-- Missing lazy loading
-- Queries without `staleTime`
-- Deep watchers
-- Heavy components
-- Inline objects causing re-renders
-
----
-
-## Migration Agents
-
-### @migration-orchestrator
-
-**When to use:** Migrate entire modules from legacy to target architecture.
-
-```
-"Use @migration-orchestrator to migrate the billing module"
-```
-
-**6-phase approach:**
-1. **Analysis** — Map current state (delegates to `@code-archaeologist`)
+1. **Analysis** — Map current state: file counts, Options vs setup, JS vs TS, mixins
 2. **Structure** — Create target directories
-3. **Types** — Extract types and contracts
-4. **Services** — Create services and adapters
-5. **State** — Migrate to Pinia + Vue Query
-6. **Components** — Migrate to script setup
-7. **Review** — Validate (delegates to `@code-reviewer`)
+3. **Types & Adapters** — .types.ts + .contracts.ts + adapter
+4. **Services** — Extract HTTP to pure services
+5. **State** — Server state → Vue Query, client state → Pinia
+6. **Components** — Convert to `<script setup lang="ts">`
 
----
+Order is bottom-up. User approval required between phases.
 
-### @vue-component-migrator
-
-**When to use:** Migrate a single component from Options API to script setup.
-
-```
-"Use @vue-component-migrator on UserSettings.vue"
-```
+### Component mode
 
 **Conversion table:**
+
 | Options API | Script Setup |
 |------------|--------------|
 | `props` | `defineProps<T>()` |
@@ -181,5 +126,58 @@ Detects:
 | `methods` | Functions |
 | `watch` | `watch()` / `watchEffect()` |
 | Mixins | Composables |
+| `this.$emit` | `emit()` |
+| `this.$refs` | `useTemplateRef()` |
 
-One component per commit. Decomposes if > 200 lines.
+Decomposes if > 200 lines. Updates consumers if API changes.
+
+---
+
+## @vue-doctor — Investigate Bugs
+
+**When to use:** Investigate bugs, unexpected behavior, console errors, broken features.
+
+```bash
+"Use @vue-doctor to investigate the 500 error on login"
+"Use @vue-doctor to find why the dashboard data is stale"
+```
+
+### Trace path (top-down)
+
+```text
+Component → Composable → Adapter → Service → API
+```
+
+At each layer, the doctor checks:
+
+| Layer | Checks |
+|-------|--------|
+| **Component** | Props correct? Emits firing? Reactive bindings? |
+| **Composable** | queryKey reactive? staleTime? Service params? Adapter applied? |
+| **Adapter** | Transformation correct? Missing fields? Wrong types? |
+| **Service** | URL correct? HTTP method? Params format? |
+| **API** | Response shape changed? Fields added/removed? |
+
+::: warning Root cause only
+The doctor fixes at the root layer, never patches symptoms. If a bug is in the adapter, it fixes the adapter — not the component.
+:::
+
+---
+
+## Full vs Lite Agents
+
+All 4 agents have Lite versions that use `model: haiku` for lower cost.
+
+| Aspect | Full | Lite |
+|--------|------|------|
+| **Model** | Sonnet/Opus | Haiku |
+| **First action** | Reads ARCHITECTURE.md | Rules inline |
+| **Validation** | tsc, build, vitest | Skipped |
+| **Size** | ~80-120 lines | ~30-50 lines |
+| **Cost** | ~5-25k tokens | ~2-10k tokens |
+
+Install lite agents with:
+
+```bash
+bash /path/to/vue-dev-kit/setup.sh --lite
+```
