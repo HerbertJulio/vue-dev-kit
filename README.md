@@ -67,10 +67,15 @@ bash C:\path\to\vue-dev-kit\setup.sh
 
 > Use `setup.sh --lite` to install Lite agents (Haiku model, lower cost).
 
-**3. Start building**
+**3. Start using**
 
 ```bash
 claude
+
+# Create a new project from scratch
+"Use @vue-starter to create a task-manager app with Vue + Express + PostgreSQL"
+
+# Or build a feature inside an existing project
 "Use @vue-builder to create a domains module with CRUD"
 ```
 
@@ -78,61 +83,42 @@ claude
 
 ## 👥 Meet Your Vue Dev Team
 
-### 🏗️ @vue-builder — Build New Code
+### 🏗️ Day-to-Day Development
 
-Creates modules, components, services, composables, and tests following your architecture.
-
-**Detects scope automatically:** module | component | service | composable | test
-
-```bash
-"Use @vue-builder to create the payments module with CRUD"
-"Use @vue-builder to create a DataTable component"
-"Use @vue-builder to create the /v4/domains service layer"
-"Use @vue-builder to create tests for the domains adapter"
-```
-
----
-
-### ✅ @vue-reviewer — Review & Analyze
-
-Reviews code against `ARCHITECTURE.md`, explores modules, and detects performance issues.
-
-**Detects scope automatically:** review | explore | performance
+| Agent | What it does |
+|-------|-------------|
+| **@vue-starter** | Create a new project from scratch — frontend + backend + database |
+| **@vue-builder** | Create modules, components, services, composables, and tests |
+| **@vue-reviewer** | Review PRs, explore modules, check performance |
+| **@vue-doctor** | Investigate bugs by tracing through architecture layers |
 
 ```bash
+# Start a new full-stack project
+"Use @vue-starter to create an e-commerce app with Vue + Fastify + PostgreSQL"
+
+# Build features
+"Use @vue-builder to create the products module with CRUD"
+
+# Review before merging
 "Use @vue-reviewer to review my last commit"
-"Use @vue-reviewer to explore src/modules/auth/"
-"Use @vue-reviewer to check performance of the dashboard module"
-```
 
-**Review output:** 🔴 Violations | 🟡 Attention | 🟢 Compliant | ✨ Highlights → Verdict: ✅/⚠️/❌
-
----
-
-### 🔄 @vue-migrator — Modernize Legacy Code
-
-Migrates Options API → script setup, JS → TS, and full module modernization.
-
-**Detects scope automatically:** module (6 phases) | component
-
-```bash
-"Use @vue-migrator to migrate the billing module"
-"Use @vue-migrator to convert UserSettings.vue to script setup"
-```
-
-**Module mode:** Analysis → Structure → Types → Services → State → Components (with approval gates)
-
----
-
-### 🔍 @vue-doctor — Investigate Bugs
-
-Traces bugs through architecture layers to find root causes, not workarounds.
-
-**Trace path:** Component → Composable → Adapter → Service → API
-
-```bash
+# Debug issues
 "Use @vue-doctor to investigate the 500 error on login"
-"Use @vue-doctor to find why the dashboard data is stale"
+```
+
+### 🔄 Architecture Migration
+
+| Agent | What it does |
+|-------|-------------|
+| **@vue-migrator** | Migrate Options API → setup, JS → TS, Vuex → Pinia + Vue Query |
+| **@vue-reviewer** | Diagnose current state before migration, validate after |
+
+```bash
+# Migrate an entire module (6 phases with approval gates)
+"Use @vue-migrator to migrate the billing module"
+
+# Convert a single component
+"Use @vue-migrator to convert UserSettings.vue to script setup"
 ```
 
 ---
@@ -228,6 +214,7 @@ Lite agents use `model: haiku` in their frontmatter, which means Claude Code run
 
 | Lite Agent | What it does |
 |-----------|-------------|
+| @vue-starter | Create new projects from scratch |
 | @vue-builder | Create modules, components, services, composables, tests |
 | @vue-reviewer | Review code, explore modules, check performance |
 | @vue-migrator | Migrate Options → setup, modernize modules |

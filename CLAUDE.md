@@ -21,12 +21,21 @@ Development toolkit for Vue 3 projects with TypeScript. Includes AI agents, slas
 
 ### Available Agents
 
+**Day-to-Day Development:**
+
 | Agent | When to Use |
 |-------|-------------|
+| `@vue-starter` | Create a new project from scratch (frontend + backend + database) |
 | `@vue-builder` | Create modules, components, services, composables, or tests |
 | `@vue-reviewer` | Review code, check architecture, explore modules, analyze performance |
-| `@vue-migrator` | Migrate legacy code (Options → setup, JS → TS, module modernization) |
 | `@vue-doctor` | Investigate bugs, trace errors through architecture layers |
+
+**Architecture Migration:**
+
+| Agent | When to Use |
+|-------|-------------|
+| `@vue-migrator` | Migrate legacy code (Options → setup, JS → TS, module modernization) |
+| `@vue-reviewer` | Diagnose current state before migration, validate after |
 
 ### Available Slash Commands
 
