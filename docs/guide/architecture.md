@@ -6,7 +6,7 @@ The `docs/ARCHITECTURE.md` in your project is the **source of truth** that all a
 
 Every feature is a self-contained module:
 
-```
+```text
 src/modules/[feature]/
 ├── components/     ← UI
 ├── composables/    ← Logic (service → adapter → query)
@@ -21,19 +21,36 @@ src/modules/[feature]/
 
 ## Import Rules
 
-```
-modules/auth  ←→  shared/          ✅ Module imports from shared
-modules/auth  →   modules/market   ❌ Module does NOT import from another module
-shared/       →   modules/auth     ❌ Shared does NOT import from modules
-app/          →   modules/*        ✅ App imports modules (router, registration)
+```mermaid
+graph LR
+    App["app/"] -->|"✅ imports"| ModA["modules/auth"]
+    App -->|"✅ imports"| ModB["modules/market"]
+    ModA -->|"✅ imports"| Shared["shared/"]
+    ModB -->|"✅ imports"| Shared
+    ModA -.->|"❌ never"| ModB
+
+    style App fill:#42b883,color:#fff
+    style ModA fill:#35495e,color:#fff
+    style ModB fill:#35495e,color:#fff
+    style Shared fill:#42b883,color:#fff
 ```
 
-If two modules need to share something → move it to `shared/`.
+- **Modules → Shared**: ✅ Allowed
+- **Modules → Modules**: ❌ Never (move shared code to `shared/`)
+- **App → Modules**: ✅ Router and registration only
 
 ## Four-Layer Architecture
 
-```
-Service (HTTP only) → Adapter (parse) → Composable (orchestrate) → Component (UI)
+```mermaid
+graph LR
+    S["🌐 Service<br/><i>HTTP only</i>"] --> A["🔄 Adapter<br/><i>Parse & Transform</i>"]
+    A --> C["⚙️ Composable<br/><i>Orchestrate + Vue Query</i>"]
+    C --> UI["🖼️ Component<br/><i>UI + Template</i>"]
+
+    style S fill:#35495e,color:#fff
+    style A fill:#42b883,color:#fff
+    style C fill:#35495e,color:#fff
+    style UI fill:#42b883,color:#fff
 ```
 
 | Layer | Does | Does NOT |
@@ -43,6 +60,31 @@ Service (HTTP only) → Adapter (parse) → Composable (orchestrate) → Compone
 | **Composable** | Orchestrate service + adapter + Vue Query | Render UI |
 | **Pinia Store** | Client state (UI, filters, preferences) | Server state, HTTP |
 | **Component** | UI + composition | Heavy business logic |
+
+## Data Flow Example
+
+Here's what happens when a user visits the Products page:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Component as ProductsView.vue
+    participant Composable as useProductsList
+    participant Service as products-service
+    participant API as REST API
+    participant Adapter as products-adapter
+
+    User->>Component: Navigate to /products
+    Component->>Composable: useProductsList({ page: 1 })
+    Composable->>Service: marketplaceService.list({ page: 1 })
+    Service->>API: GET /v2/products?page=1
+    API-->>Service: { data: [...], total_pages: 5 }
+    Service-->>Composable: raw API response
+    Composable->>Adapter: toProductList(response)
+    Adapter-->>Composable: { items: Product[], totalPages: 5 }
+    Composable-->>Component: { items, isLoading, totalPages }
+    Component-->>User: Rendered product table
+```
 
 ::: tip State Management Split
 **Pinia** = Client state (UI, filters, preferences)

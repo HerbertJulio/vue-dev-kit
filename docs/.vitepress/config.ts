@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'Vue Dev Kit',
   description: 'Development toolkit for Vue 3 projects with Claude Code',
   base: '/vue-dev-kit/',
@@ -78,4 +79,16 @@ export default defineConfig({
       provider: 'local',
     },
   },
-})
+
+  mermaid: {
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#42b883',
+      primaryTextColor: '#213547',
+      primaryBorderColor: '#42b883',
+      lineColor: '#42b883',
+      secondaryColor: '#35495e',
+      tertiaryColor: '#f8f8f8',
+    },
+  },
+}))
