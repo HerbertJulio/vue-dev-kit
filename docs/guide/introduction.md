@@ -1,7 +1,5 @@
 # Introduction
 
-<div style="display: flex; gap: 8px; align-items: center;"><a href="https://github.com/HerbertJulio/vue-dev-kit/stargazers"><img src="https://img.shields.io/github/stars/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Stars" alt="GitHub stars" /></a><a href="https://github.com/HerbertJulio/vue-dev-kit/network/members"><img src="https://img.shields.io/github/forks/HerbertJulio/vue-dev-kit?style=flat&logo=github&label=Forks" alt="GitHub forks" /></a><a href="https://github.com/HerbertJulio/vue-dev-kit/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a></div>
-
 ## What is Vue Dev Kit?
 
 Vue Dev Kit is an open-source collection of **agents**, **slash commands**, and **architectural conventions** designed for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
