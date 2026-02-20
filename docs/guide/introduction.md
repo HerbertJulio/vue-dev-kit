@@ -76,3 +76,13 @@ sequenceDiagram
 - [Installation](/guide/installation) — Set up Vue Dev Kit in your project
 - [Quick Start](/guide/quick-start) — Build a real feature step by step
 - [Architecture Overview](/guide/architecture) — Understand the patterns
+
+## Tutorials
+
+Step-by-step guides with real-world code:
+
+- [Build a CRUD Module](/tutorials/crud-module) — Complete Orders module from scratch
+- [Create a Service Layer](/tutorials/service-layer) — Integrate a new API endpoint
+- [Build Forms with Validation](/tutorials/forms) — Zod + useMutation + error handling
+- [Pagination + Filters](/tutorials/pagination-filters) — Lists with search, filters, and pagination
+- [Migrate Your Project](/tutorials/migrate-project) — Legacy architecture → Vue Dev Kit standard
